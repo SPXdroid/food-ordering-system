@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Order Placed</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #222;
+    }
+
+    header {
+        background-color: #ff6b35;
+        color: white;
+        text-align: center;
+        padding: 35px 20px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 34px;
+    }
+
+    main {
+        max-width: 850px;
+        margin: 35px auto;
+        padding: 0 20px;
+    }
+
+    .box {
+        background-color: white;
+        padding: 25px;
+        margin-bottom: 20px;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .success {
+        text-align: center;
+    }
+
+    .success h1 {
+        color: #2e8b57;
+    }
+
+    .item {
+        padding: 14px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .item:last-child {
+        border-bottom: none;
+    }
+
+    .item h3 {
+        margin: 0 0 8px;
+    }
+
+    .item p {
+        color: #666;
+    }
+
+    .total {
+        color: #ff6b35;
+        text-align: right;
+    }
+
+    .buttons {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .buttons a {
+        display: inline-block;
+        margin: 5px;
+        padding: 12px 18px;
+        background-color: #ff6b35;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    .buttons a:hover {
+        background-color: #e85a2a;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<header>
+    <h1>🎉 Order Placed Successfully!</h1>
+</header>
+
+<main>
+
+    <div class="box success">
+
+        <h1>Thank you for your order! 🍽️</h1>
+
+        <p>Your order has been received successfully.</p>
+
+    </div>
+
+    <div class="box">
+
+        <h2>👤 Customer Details</h2>
+
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>Phone:</strong> {{ phone }}</p>
+        <p><strong>Address:</strong> {{ address }}</p>
+
+    </div>
+
+    <div class="box">
+
+        <h2>🧾 Order Summary</h2>
+
+        {% for cart_item in cart_items %}
+
+            <div class="item">
+
+                <h3>{{ cart_item.item.name }}</h3>
+
+                <p>
+                    ₹{{ cart_item.item.price }}
+                    ×
+                    {{ cart_item.quantity }}
+                    =
+                    ₹{{ cart_item.total }}
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+        <h2 class="total">Total: ₹{{ order_total }}</h2>
+
+    </div>
+
+    <div class="buttons">
+
+        <a href="/">🏠 Back to Menu</a>
+
+        <a href="/orders">📋 Order History</a>
+
+    </div>
+
+</main>
+```
+
+</body>
+</html>

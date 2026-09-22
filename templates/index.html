@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Food Ordering System</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #222;
+    }
+
+    /* Navigation */
+
+    .nav {
+        background-color: white;
+        padding: 16px 20px;
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .nav a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    .nav a:hover {
+        color: #ff6b35;
+    }
+
+    /* Header */
+
+    header {
+        background-color: #ff6b35;
+        color: white;
+        text-align: center;
+        padding: 45px 20px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 38px;
+    }
+
+    header p {
+        margin-top: 12px;
+        font-size: 18px;
+    }
+
+    /* Main */
+
+    main {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    main h2 {
+        text-align: center;
+        font-size: 30px;
+        margin-bottom: 30px;
+    }
+
+    /* Menu */
+
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+    }
+
+    .food-card {
+        background-color: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .food-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .food-image {
+        height: 170px;
+        background-color: #ffe0d2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 75px;
+    }
+
+    .food-info {
+        padding: 20px;
+    }
+
+    .category {
+        color: #ff6b35;
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .food-info h3 {
+        font-size: 22px;
+        margin: 8px 0;
+    }
+
+    .food-info p {
+        color: #666;
+        line-height: 1.5;
+        min-height: 45px;
+    }
+
+    .bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .price {
+        font-size: 22px;
+        font-weight: bold;
+        color: #222;
+    }
+
+    button {
+        background-color: #ff6b35;
+        color: white;
+        border: none;
+        padding: 11px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        background-color: #e85a2a;
+        transform: scale(1.03);
+    }
+
+    /* Cart */
+
+    .cart-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .cart {
+        margin-top: 40px;
+        background-color: white;
+        padding: 22px;
+        border-radius: 14px;
+        text-align: center;
+        font-size: 20px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.10);
+        transition: 0.2s;
+    }
+
+    .cart-link:hover .cart {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 20px rgba(0, 0, 0, 0.13);
+    }
+
+    .cart span {
+        font-weight: bold;
+        color: #ff6b35;
+    }
+
+    /* Mobile */
+
+    @media (max-width: 600px) {
+
+        .nav {
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        header {
+            padding: 35px 15px;
+        }
+
+        header h1 {
+            font-size: 28px;
+        }
+
+        header p {
+            font-size: 16px;
+        }
+
+        main {
+            margin-top: 30px;
+        }
+
+        main h2 {
+            font-size: 26px;
+        }
+
+        .bottom {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .price {
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<nav class="nav">
+
+    <a href="/cart">
+        🛒 View Cart
+    </a>
+
+    <a href="/orders">
+        📋 Order History
+    </a>
+
+    <a href="/admin/login">
+        🛠️ Admin
+    </a>
+
+</nav>
+
+<header>
+
+    <h1>🍽️ Food Ordering System</h1>
+
+    <p>
+        Delicious food, delivered to you
+    </p>
+
+</header>
+
+<main>
+
+    <h2>Our Menu</h2>
+
+    <div class="menu">
+
+        {% for food in food_items %}
+
+        <div class="food-card">
+
+            <div class="food-image">
+                🍽️
+            </div>
+
+            <div class="food-info">
+
+                <span class="category">
+                    {{ food.category }}
+                </span>
+
+                <h3>
+                    {{ food.name }}
+                </h3>
+
+                <p>
+                    {{ food.description }}
+                </p>
+
+                <div class="bottom">
+
+                    <span class="price">
+                        ₹{{ food.price }}
+                    </span>
+
+                    <button onclick="addToCart({{ food.id }}, '{{ food.name }}')">
+                        🛒 Add to Cart
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <a href="/cart" class="cart-link">
+
+        <div class="cart">
+
+            🛒 Cart:
+            <span id="cart-count">0</span>
+            items
+
+            <br><br>
+
+            Total:
+            ₹<span id="cart-total">0</span>
+
+        </div>
+
+    </a>
+
+</main>
+
+<script>
+
+    async function addToCart(foodId, foodName) {
+
+        const response = await fetch("/add-to-cart", {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                food_id: foodId
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+
+            document.getElementById("cart-count").textContent =
+                data.cart_count;
+
+            document.getElementById("cart-total").textContent =
+                data.cart_total;
+
+            alert(data.message);
+
+        } else {
+
+            alert("Something went wrong.");
+
+        }
+
+    }
+
+</script>
+```
+
+</body>
+
+</html>

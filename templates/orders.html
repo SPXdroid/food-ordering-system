@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Order History</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #222;
+    }
+
+    header {
+        background-color: #ff6b35;
+        color: white;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 34px;
+    }
+
+    main {
+        max-width: 900px;
+        margin: 35px auto;
+        padding: 0 20px;
+    }
+
+    .order-card {
+        background-color: white;
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .order-card h2 {
+        margin-top: 0;
+        color: #ff6b35;
+    }
+
+    .customer-details {
+        background-color: #fafafa;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 15px 0;
+    }
+
+    .status {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .tracking {
+        background-color: #fff7f2;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 15px 0;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .items {
+        margin-top: 20px;
+    }
+
+    .item {
+        padding: 12px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .item:last-child {
+        border-bottom: none;
+    }
+
+    .total {
+        text-align: right;
+        color: #ff6b35;
+        font-size: 20px;
+        margin-top: 20px;
+    }
+
+    .cancel-button {
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        padding: 10px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .cancel-button:hover {
+        background-color: #c9302c;
+    }
+
+    .back {
+        display: inline-block;
+        margin-bottom: 25px;
+        color: #ff6b35;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .empty {
+        background-color: white;
+        padding: 40px;
+        text-align: center;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<header>
+    <h1>📋 Order History</h1>
+</header>
+
+<main>
+
+    <a href="/" class="back">🏠 Back to Menu</a>
+
+    {% if orders %}
+
+        {% for order in orders %}
+
+            <div class="order-card">
+
+                <h2>Order #{{ order.id }}</h2>
+
+                <div class="customer-details">
+
+                    <p>
+                        <strong>Name:</strong> {{ order.name }}
+                    </p>
+
+                    <p>
+                        <strong>Phone:</strong> {{ order.phone }}
+                    </p>
+
+                    <p>
+                        <strong>Address:</strong> {{ order.address }}
+                    </p>
+
+                </div>
+
+                <p class="status">
+
+                    <strong>Status:</strong>
+
+                    {% if order.status == "Pending" %}
+                        🟡 Pending
+
+                    {% elif order.status == "Preparing" %}
+                        🔵 Preparing
+
+                    {% elif order.status == "Delivered" %}
+                        🟢 Delivered
+
+                    {% elif order.status == "Cancelled" %}
+                        ❌ Cancelled
+                    {% endif %}
+
+                </p>
+
+                <div class="tracking">
+
+                    {% if order.status == "Pending" %}
+
+                        🟡 Pending → ⚪ Preparing → ⚪ Delivered
+
+                    {% elif order.status == "Preparing" %}
+
+                        🟢 Done → 🔵 Preparing → ⚪ Delivered
+
+                    {% elif order.status == "Delivered" %}
+
+                        🟢 Done → 🟢 Done → 🟢 Delivered
+
+                    {% elif order.status == "Cancelled" %}
+
+                        ❌ Order Cancelled
+
+                    {% endif %}
+
+                </div>
+
+                {% if order.status == "Pending" %}
+
+                    <form action="/cancel-order/{{ order.id }}" method="POST">
+
+                        <button type="submit" class="cancel-button">
+                            ❌ Cancel Order
+                        </button>
+
+                    </form>
+
+                {% endif %}
+
+                <div class="items">
+
+                    <h3>🍽️ Items</h3>
+
+                    {% for item in order.items %}
+
+                        <div class="item">
+
+                            <strong>{{ item.food_item.name }}</strong>
+
+                            × {{ item.quantity }}
+
+                            — ₹{{ item.price * item.quantity }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <p class="total">
+                    <strong>Total: ₹{{ order.total }}</strong>
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>No orders yet 🛒</h2>
+
+            <p>Place your first order from the menu!</p>
+
+        </div>
+
+    {% endif %}
+
+</main>
+```
+
+</body>
+
+</html>

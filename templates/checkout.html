@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Checkout</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #222;
+    }
+
+    header {
+        background-color: #ff6b35;
+        color: white;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 34px;
+    }
+
+    main {
+        max-width: 850px;
+        margin: 35px auto;
+        padding: 0 20px;
+    }
+
+    .box {
+        background-color: white;
+        padding: 25px;
+        margin-bottom: 25px;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .item {
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .item:last-child {
+        border-bottom: none;
+    }
+
+    .item h3 {
+        margin: 0 0 8px;
+    }
+
+    .item p {
+        color: #666;
+    }
+
+    .total {
+        color: #ff6b35;
+        text-align: right;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        margin-top: 7px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-family: Arial, sans-serif;
+        font-size: 15px;
+    }
+
+    textarea {
+        min-height: 100px;
+        resize: vertical;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        background-color: #ff6b35;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #e85a2a;
+    }
+
+    .back {
+        display: inline-block;
+        margin-top: 5px;
+        color: #ff6b35;
+        text-decoration: none;
+        font-weight: bold;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<header>
+    <h1>🧾 Checkout</h1>
+</header>
+
+<main>
+
+    <div class="box">
+
+        <h2>🛒 Order Summary</h2>
+
+        {% for cart_item in cart_items %}
+
+            <div class="item">
+
+                <h3>{{ cart_item.item.name }}</h3>
+
+                <p>
+                    ₹{{ cart_item.item.price }}
+                    ×
+                    {{ cart_item.quantity }}
+                    =
+                    ₹{{ cart_item.total }}
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+        <h2 class="total">Total: ₹{{ cart_total }}</h2>
+
+    </div>
+
+    <div class="box">
+
+        <h2>👤 Customer Details</h2>
+
+        <form action="/place-order" method="POST">
+
+            <label>Name:</label>
+            <input type="text" name="name" required>
+
+            <br><br>
+
+            <label>Phone:</label>
+            <input type="text" name="phone" required>
+
+            <br><br>
+
+            <label>Address:</label>
+            <textarea name="address" required></textarea>
+
+            <br><br>
+
+            <button type="submit">🛍️ Place Order</button>
+
+        </form>
+
+    </div>
+
+    <a href="/cart" class="back">⬅️ Back to Cart</a>
+
+</main>
+```
+
+</body>
+</html>

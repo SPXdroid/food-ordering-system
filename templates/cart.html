@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Your Cart</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        color: #222;
+    }
+
+    header {
+        background-color: #ff6b35;
+        color: white;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 34px;
+    }
+
+    main {
+        max-width: 900px;
+        margin: 35px auto;
+        padding: 0 20px;
+    }
+
+    .cart-item {
+        background-color: white;
+        padding: 22px;
+        margin-bottom: 18px;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .cart-item h2 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .cart-item p {
+        color: #666;
+    }
+
+    .actions {
+        margin-top: 18px;
+    }
+
+    button {
+        border: none;
+        padding: 9px 15px;
+        margin-right: 6px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-weight: bold;
+        background-color: #ff6b35;
+        color: white;
+    }
+
+    button:hover {
+        background-color: #e85a2a;
+    }
+
+    .remove {
+        background-color: #d9534f;
+    }
+
+    .remove:hover {
+        background-color: #c9302c;
+    }
+
+    .total {
+        background-color: white;
+        padding: 22px;
+        border-radius: 14px;
+        margin-top: 25px;
+        text-align: right;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .total h2 {
+        margin: 0;
+        color: #ff6b35;
+    }
+
+    .empty {
+        background-color: white;
+        padding: 40px;
+        text-align: center;
+        border-radius: 14px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .back {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #ff6b35;
+        font-weight: bold;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<header>
+    <h1>🛒 Your Cart</h1>
+</header>
+
+<main>
+
+    {% if cart_items %}
+
+        {% for cart_item in cart_items %}
+
+            <div class="cart-item">
+
+                <h2>{{ cart_item.item.name }}</h2>
+
+                <p>Price: ₹{{ cart_item.item.price }}</p>
+
+                <p>Quantity: {{ cart_item.quantity }}</p>
+
+                <p>Item Total: ₹{{ cart_item.total }}</p>
+
+                <div class="actions">
+
+                    <form action="/update-cart/{{ cart_item.item.id }}" method="POST" style="display:inline;">
+                        <button type="submit" name="action" value="decrease">−</button>
+                    </form>
+
+                    <form action="/update-cart/{{ cart_item.item.id }}" method="POST" style="display:inline;">
+                        <button type="submit" name="action" value="increase">+</button>
+                    </form>
+
+                    <form action="/update-cart/{{ cart_item.item.id }}" method="POST" style="display:inline;">
+                        <button class="remove" type="submit" name="action" value="remove">
+                            Remove
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+        <div class="total">
+            <h2>Total: ₹{{ cart_total }}</h2>
+
+            <a href="/checkout" class="back">➡️ Proceed to Checkout</a>
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>Your cart is empty 🛒</h2>
+
+            <p>Add some delicious food from the menu!</p>
+
+            <a href="/" class="back">⬅️ Back to Menu</a>
+
+        </div>
+
+    {% endif %}
+
+    <a href="/" class="back">⬅️ Continue Shopping</a>
+
+</main>
+```
+
+</body>
+</html>
