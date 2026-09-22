@@ -225,7 +225,13 @@ def place_order():
 
             db.session.add(order_item)
 
-    db.session.commit()
+        db.session.commit()
+
+    my_order_ids = session.get("my_order_ids", [])
+
+    my_order_ids.append(new_order.id)
+
+    session["my_order_ids"] = my_order_ids
 
     session["cart"] = {}
 
@@ -241,7 +247,15 @@ def place_order():
 
 @app.route("/orders")
 def orders():
-    orders = Order.query.order_by(Order.id.desc()).all()
+    my_order_ids = session.get("my_order_ids", [])
+
+    if not my_order_ids:
+        orders = []
+    else:
+        orders = Order.query.filter(
+            Order.id.in_(my_order_ids)
+        ).order_by(Order.id.desc()).all()
+
     return render_template("orders.html", orders=orders)
 
 
