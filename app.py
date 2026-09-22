@@ -309,6 +309,43 @@ def update_order_status(order_id):
 with app.app_context():
     db.create_all()
 
+    if FoodItem.query.count() == 0:
+        food_items = [
+            FoodItem(
+                name="Classic Burger",
+                category="Burgers",
+                description="Juicy classic burger with fresh vegetables",
+                price=149
+            ),
+            FoodItem(
+                name="French Fries",
+                category="Sides",
+                description="Crispy golden french fries",
+                price=99
+            ),
+            FoodItem(
+                name="Margherita Pizza",
+                category="Pizza",
+                description="Classic pizza with tomato and mozzarella",
+                price=249
+            ),
+            FoodItem(
+                name="Veg Sandwich",
+                category="Sandwiches",
+                description="Fresh vegetable sandwich",
+                price=129
+            ),
+            FoodItem(
+                name="Cold Coffee",
+                category="Drinks",
+                description="Chilled creamy cold coffee",
+                price=119
+            )
+        ]
+
+        db.session.add_all(food_items)
+        db.session.commit()
+
 
 if __name__ == "__main__":
     app.run(debug=True)
